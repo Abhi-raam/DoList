@@ -1,16 +1,26 @@
 import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../assets/login.png'
 import { useState } from 'react'
+import { UserAuth } from '../Context/AuthContext'
 
 function Loginpage() {
     const navigate = useNavigate()
     const [email, setUserEmail] = useState("")
     const [password, setPassword] = useState("")
-    const handleSubmit=(e)=>{
+    const { signIn } = UserAuth();
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Password : ",password);
-        console.log("Username : ",email);
-      }
+        try {
+            await signIn(email, password);
+            console.log('Login success');
+            navigate('/');
+            // console.log(email);
+            // console.log(password);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 
     return (
         <div className='h-screen flex items-center justify-around'>

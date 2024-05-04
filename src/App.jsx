@@ -6,18 +6,21 @@ import ProjectPage from './Pages/ProjectPage'
 import AddProjects from './Pages/AddProjects'
 import Loginpage from './Pages/Loginpage'
 import SignupPage from './Pages/SignupPage'
+import { AuthContextProvider } from './Context/AuthContext'
 
 function App() {
   return (
     <div>
-      <Navbar />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<Loginpage />} />
-        <Route path='/signup' element={<SignupPage />} />
-        <Route path='/projects' element={<ProjectPage />} />
-        <Route path='/add-projects' element={<AddProjects />} />
-      </Routes>
+      <AuthContextProvider>
+        <Navbar />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/login' element={<Loginpage />} />
+          <Route path='/signup' element={<SignupPage />} />
+          <Route path='/projects' element={<ProjectPage />} />
+          <Route path='/add-projects' element={<AddProjects />} />
+        </Routes>
+      </AuthContextProvider>
     </div>
   )
 }

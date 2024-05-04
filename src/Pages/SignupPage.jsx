@@ -1,18 +1,24 @@
 import React from 'react'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../assets/login.png'
+import { createUser } from '../Helpers/UserHelpers'
 import { useState } from 'react'
+import { UserAuth } from '../Context/AuthContext'
 function SignupPage() {
     const navigate = useNavigate()
-  const [username, setUserName] = useState("")
-  const [password, setPassword] = useState("")
-  const [email, setEmail] = useState("")
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    console.log("Email : ",email);
-    console.log("Password : ",password);
-    console.log("Username : ",username);
-  }
+    const {register} = UserAuth()
+    const [username, setUserName] = useState("")
+    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createUser(email, password, username)
+        register(email,password)
+        setEmail("")
+        setPassword("")
+        setEmail("")
+        navigate('/login')
+    }
     return (
         <div className='h-screen flex items-center justify-around'>
             <div className='w-[80%] lg:w-1/3  space-y-5'>

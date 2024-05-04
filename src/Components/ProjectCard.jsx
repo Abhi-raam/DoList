@@ -14,13 +14,15 @@ function ProjectCard() {
                 <FaFolderOpen className='text-5xl' />
                 <HiDotsVertical onClick={toggleDlt} />
             </div>
-            {toggle?
-            <div className=' relative'>
-                <div className='text-red-600 font-medium flex items-center gap-3 bg-white p-2 rounded-md absolute right-0 -top-2'>
-                    <RiDeleteBin6Line />Delete
+            {toggle ?
+                <div className=' relative'>
+                    <div className='text-red-600 font-medium  bg-white p-2 rounded-md absolute right-0 -top-2'>
+                        <div className='hover:bg-slate-300 flex items-center gap-3 p-1 rounded-sm'>
+                            <RiDeleteBin6Line />Delete
+                        </div>
+                    </div>
                 </div>
-            </div>
-            :null}
+                : null}
             <div className='flex justify-between items-center pt-5'>
                 <h2 className='text-lg font-semibold'>Project 1</h2>
                 <div className='flex flex-col items-center'>

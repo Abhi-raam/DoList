@@ -7,6 +7,7 @@ import AddProjects from './Pages/AddProjects'
 import Loginpage from './Pages/Loginpage'
 import SignupPage from './Pages/SignupPage'
 import { AuthContextProvider } from './Context/AuthContext'
+import ProjectDetails from './Pages/ProjectDetails'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/projects' element={<ProjectPage />} />
           <Route path='/add-projects' element={<AddProjects />} />
+          <Route path='/project-details' element={<ProjectDetails />} />
         </Routes>
       </AuthContextProvider>
     </div>

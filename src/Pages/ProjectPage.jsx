@@ -38,7 +38,11 @@ function ProjectPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
                     {projects.map((project, index) => (
-                        <ProjectCard project={project} />
+                        <div className='w-full'>
+                        <Link to='/project-details'>
+                            <ProjectCard project={project} />
+                        </Link>
+                        </div>
                     ))}
                 </div>
             )}

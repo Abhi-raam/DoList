@@ -2,12 +2,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../assets/login.png'
 import { useState } from 'react'
 import { UserAuth } from '../Context/AuthContext'
+import { PiEye, PiEyeClosed } from "react-icons/pi";
 
 function Loginpage() {
     const navigate = useNavigate()
     const [email, setUserEmail] = useState("")
     const [password, setPassword] = useState("")
     const { signIn } = UserAuth();
+    const [passwordVisible, setPasswordVisible] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -37,11 +43,20 @@ function Loginpage() {
                         <input type="email" placeholder="Email" className="input input-bordered" onChange={(e) => { setUserEmail(event.target.value) }} />
                     </label>
 
-                    <label className="form-control pb-2">
+                    <label className="form-control relative pb-2">
                         <div className="label">
                             <span className="label-text">Password</span>
                         </div>
-                        <input type="password" placeholder="Password" className="input input-bordered" onChange={(e) => { setPassword(event.target.value) }} />
+                        <input
+                            type={passwordVisible ? 'text' : 'password'}
+                            placeholder="Password"
+                            className="input input-bordered"
+                            onChange={(e) => { setPassword(e.target.value) }} />
+                        <div
+                            className='absolute right-3 bottom-6 cursor-pointer'
+                            onClick={togglePasswordVisibility}>
+                            {passwordVisible ? <PiEye /> : <PiEyeClosed />}
+                        </div>
                     </label>
                     <button type='submit' className='btn w-full bg-violet-600 hover:bg-violet-700 text-white hover:bg-blue_secondary'>
                         Login

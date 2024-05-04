@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
+import { createProject } from '../Helpers/UserHelpers';
+import { UserAuth } from '../Context/AuthContext';
 
 const AddProjects = () => {
+    const { user } = UserAuth();
     const [projectName, setProjectName] = useState('');
-    const [projectId, setProjectId] = useState(uuidv4());
+    // const [projectId, setProjectId] = useState(uuidv4());
     const [projectCreatedOn, setProjectCreatedOn] = useState(Date.now());
     const [todos, setTodos] = useState([
         {
-            id: uuidv4(),
+            // id: uuidv4(),
             name: '',
             description: '',
+            status: false,
             createdOn: Date.now(),
             updatedOn: Date.now()
         }
@@ -19,9 +23,10 @@ const AddProjects = () => {
         setTodos([
             ...todos,
             {
-                id: uuidv4(), // Generate unique ID for the new task
+                // id: uuidv4(), // Generate unique ID for the new task
                 name: '',
                 description: '',
+                status: false,
                 createdOn: Date.now(),
                 updatedOn: Date.now()
             }
@@ -42,10 +47,15 @@ const AddProjects = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Project id:", projectId);
-        console.log("Project:", projectName);
-        console.log("Created date : ", projectCreatedOn);
-        console.log("Todos:", todos);
+        const fullProject = {
+            // projectId,
+            projectName,
+            projectCreatedOn,
+            userId: user.uid,
+            todos
+
+        }
+        createProject(fullProject)
     };
 
     return (

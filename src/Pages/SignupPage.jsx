@@ -13,15 +13,19 @@ function SignupPage() {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        createUser(email, password, username)
-        register(email, password)
-        setEmail("")
-        setPassword("")
-        setEmail("")
-        navigate('/login')
-    }
+        try {
+            await register(email, password);
+            await createUser(email, password, username);
+            setEmail('');
+            setPassword('');
+            setUserName('');
+            navigate('/login');
+        } catch (error) {
+            alert('Registration failed: ' + error.message);
+        }
+    };
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };

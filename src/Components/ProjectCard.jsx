@@ -3,7 +3,7 @@ import { FaFolderOpen } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-function ProjectCard() {
+function ProjectCard({ project }) {
     const [toggle, setToggle] = useState(false)
     const toggleDlt = () => {
         setToggle(!toggle)
@@ -24,7 +24,7 @@ function ProjectCard() {
                 </div>
                 : null}
             <div className='flex justify-between items-center pt-5'>
-                <h2 className='text-lg font-semibold'>Project 1</h2>
+                <h2 className='text-lg font-semibold'>{project.projectName}</h2>
                 <div className='flex flex-col items-center'>
                     <h2 className='font-semibold text-[13px]'>1/3 completed</h2>
                     <h2 className='font-semibold text-[12px]'>24 Apr 2024</h2>

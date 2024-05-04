@@ -8,6 +8,15 @@ function ProjectCard({ project }) {
     const toggleDlt = () => {
         setToggle(!toggle)
     }
+    const lengthTodo = project.todos.length
+    const date = new Date(project.projectCreatedOn)
+    const formattedDate = date.toLocaleString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+    const incompleteTodos = project.todos.filter((todo) => todo.status === true);
+    console.log(project);
     return (
         <div className='shadow-md bg-slate-200 w-full lg:w-[90%] p-5 hover:-translate-y-1 transition rounded-md cursor-pointer'>
             <div className='flex items-center justify-between '>
@@ -26,8 +35,8 @@ function ProjectCard({ project }) {
             <div className='flex justify-between items-center pt-5'>
                 <h2 className='text-lg font-semibold'>{project.projectName}</h2>
                 <div className='flex flex-col items-center'>
-                    <h2 className='font-semibold text-[13px]'>1/3 completed</h2>
-                    <h2 className='font-semibold text-[12px]'>24 Apr 2024</h2>
+                    <h2 className='font-semibold text-[13px]'>{incompleteTodos.length}/{lengthTodo} completed </h2>
+                    <h2 className='font-semibold text-[12px]'>{formattedDate}</h2>
                 </div>
             </div>
         </div>

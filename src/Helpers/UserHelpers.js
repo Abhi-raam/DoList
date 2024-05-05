@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import {db} from '../Firebase/config'
 
 export const createUser = async(email,password,username)=>{
@@ -11,9 +11,19 @@ export const createUser = async(email,password,username)=>{
 }
 
 export const createProject = async(data)=>{
-    await addDoc(collection(db,'projects'),data).then((data)=>{
-        console.log(data);
-    })
+    await addDoc(collection(db,'projects'),data)
+}
+
+export const editProject = async(id,data)=>{
+    console.log(data);
+    try {
+        if(!id){
+            console.log("Project id not defined");
+        }
+        await updateDoc(doc(db,'projects',id),data)
+    } catch (error) {
+        
+    }
 }
 
 export const getAllProjectsForUser = async (userId) => {
@@ -28,9 +38,27 @@ export const getAllProjectsForUser = async (userId) => {
             id: doc.id,
             ...doc.data(),
         })
-    })
-  
-    console.log("Projects for user:", projectArray);
-  
+    })  
     return projectArray; 
+  };
+
+
+  export const getProjectById = async (projectId) => {
+    console.log(projectId);
+    try {
+      const projectRef = doc(db, 'projects', projectId);
+  
+      const projectDoc = await getDoc(projectRef);
+  
+      if (projectDoc.exists()) {
+        const projectData = projectDoc.data()
+        // console.log(projectData);
+        return projectData
+      } else {
+        throw new Error(`No project found with ID: ${projectId}`);
+      }
+    } catch (error) {
+      console.error('Error getting project by ID:', error.message);
+      throw error;
+    }
   };

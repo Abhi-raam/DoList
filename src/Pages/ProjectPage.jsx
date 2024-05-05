@@ -39,7 +39,7 @@ function ProjectPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
                     {projects.map((project, index) => (
                         <div className='w-full'>
-                        <Link to='/project-details'>
+                        <Link to={`/project-details/${project.id}`}>
                             <ProjectCard project={project} />
                         </Link>
                         </div>

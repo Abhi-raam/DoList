@@ -1,73 +1,91 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
-import { createProject } from '../Helpers/UserHelpers';
+import { editProject, getProjectById } from '../Helpers/UserHelpers';
 import { UserAuth } from '../Context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { InfinitySpin } from 'react-loader-spinner';
 
-const AddProjects = () => {
-    const { user } = UserAuth();
-    const navigate = useNavigate()
+function EditProject() {
+    const { user } = UserAuth(); // Get user info
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [loading, setLoading] = useState(true); // Loading state
     const [projectName, setProjectName] = useState('');
-    // const [projectId, setProjectId] = useState(uuidv4());
-    const [projectCreatedOn, setProjectCreatedOn] = useState(Date.now());
-    const [todos, setTodos] = useState([
-        {
-            // id: uuidv4(),
-            name: '',
-            description: '',
-            status: false,
-            createdOn: Date.now(),
-            updatedOn: Date.now()
-        }
-    ]);
+    const [todos, setTodos] = useState([]); // Initial empty array for todos
+    const projectId = location.pathname.split('/').pop(); // Extract project ID from the URL
+
+    useEffect(() => {
+        const fetchProjectDetails = async () => {
+            try {
+                const projectData = await getProjectById(projectId); // Fetch project details
+                setProjectName(projectData.projectName); // Set project name
+                setTodos(projectData.todos || []); // Set todos
+            } catch (error) {
+                console.error('Error fetching project details:', error); // Handle error
+            } finally {
+                setLoading(false); // End loading
+            }
+        };
+
+        fetchProjectDetails(); // Fetch project details when component mounts
+    }, [projectId]); // Dependency array with projectId
 
     const addTask = () => {
         setTodos([
             ...todos,
             {
-                // id: uuidv4(), // Generate unique ID for the new task
                 name: '',
                 description: '',
                 status: false,
-                createdOn: Date.now(),
-                updatedOn: Date.now()
-            }
+                createdOn: Date.now(), // Initial createdOn for new tasks
+                updatedOn: Date.now(),
+            },
         ]);
     };
 
     const removeTask = (index) => {
-        setTodos(todos.filter((_, i) => i !== index)); // Correctly remove the specified task
+        setTodos(todos.filter((_, i) => i !== index));
     };
 
     const handleTodoChange = (index, field, value) => {
         const updatedTodos = [...todos];
-        updatedTodos[index][field] = value;
-        updatedTodos[index].createdOn = Date.now();
-        updatedTodos[index].updatedOn = Date.now();
-        setTodos(updatedTodos);
+        updatedTodos[index][field] = value; // Update the field
+        updatedTodos[index].updatedOn = Date.now(); // Update updatedOn
+        setTodos(updatedTodos); // Set the updated todos state
     };
 
-    const handleSubmit = async (e) => {
+    const handleEdit = async (e) => {
         e.preventDefault();
-        const fullProject = {
-            // projectId,
-            projectName,
-            projectCreatedOn,
-            userId: user.uid,
-            todos
 
+        const fullProject = {
+            projectName,
+            userId: user.uid,
+            todos,
+        };
+
+        try {
+            await editProject(projectId, fullProject);
+            navigate('/projects');
+        } catch (error) {
+            console.error('Error saving project:', error);
         }
-        createProject(fullProject)
-        navigate('/projects')
     };
+
+    if (loading) {
+        return (
+            <div className='items-center h-[90vh] justify-center flex'>
+                <InfinitySpin width='200' color='#7365b7' />
+            </div>
+        )
+    }
 
     return (
         <div className='p-6 lg:h-screen'>
             <div>
-                <h2 className='text-2xl lg:text-3xl font-semibold'>Create New Project</h2>
+                <h2 className='text-2xl lg:text-3xl font-semibold'>Edit Project</h2>
             </div>
             <div className='flex justify-center bg-white mt-10 pb-5 rounded-md'>
-                <form onSubmit={handleSubmit} className='w-full space-y-5 p-3'>
+                <form onSubmit={handleEdit} className='w-full space-y-5 p-3'>
                     <label className="form-control">
                         <div className="label">
                             <span className="label-text">Project Name</span>
@@ -77,7 +95,8 @@ const AddProjects = () => {
                             placeholder="Type here"
                             className="input input-bordered"
                             value={projectName}
-                            onChange={(e) => setProjectName(e.target.value)} />
+                            onChange={(e) => setProjectName(e.target.value)} // Update project name
+                        />
                     </label>
                     {todos.map((todo, index) => (
                         <div key={index} className="pb-3">
@@ -91,7 +110,8 @@ const AddProjects = () => {
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
                                         value={todo.name}
-                                        onChange={(e) => handleTodoChange(index, 'name', e.target.value)} />
+                                        onChange={(e) => handleTodoChange(index, 'name', e.target.value)}
+                                    />
                                 </div>
                             </label>
                             <label className="form-control">
@@ -104,11 +124,13 @@ const AddProjects = () => {
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
                                         value={todo.description}
-                                        onChange={(e) => handleTodoChange(index, 'description', e.target.value)} />
+                                        onChange={((e) => handleTodoChange(index, 'description', e.target.value))}// Update description without changing createdOn
+                                    />
                                     <button
                                         type="button"
                                         className="btn bg-red-500 text-white hover:bg-red-600"
-                                        onClick={() => removeTask(index)}>
+                                        onClick={() => removeTask(index)}
+                                    >
                                         Remove Task
                                     </button>
                                 </div>
@@ -116,20 +138,21 @@ const AddProjects = () => {
                         </div>
                     ))}
                     <button
-                        type="button"
-                        className="btn bg-green-500 hover:bg-green-600 text-white"
-                        onClick={addTask}>
+                        type='button'
+                        className='btn bg-green-500 hover:bg-green-600 text-white'
+                        onClick={addTask}
+                    >
                         Add Task
                     </button>
                     <div className='flex justify-center pt-10'>
-                        <button type="submit" className='btn btn-sm px-6 btn-primary'>
-                            Save
+                        <button type='submit' className='btn btn-sm px-6 btn-primary'>
+                            Save Changes
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     );
-};
+}
 
-export default AddProjects;
+export default EditProject;

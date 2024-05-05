@@ -2,9 +2,8 @@ import React from 'react'
 
 function TodoNormal({ project,updateTodoStatus }) {
     const handleCheckboxChange = (index) => {
-        const updatedTodos = [...project.todos];
-        updatedTodos[index].status = !updatedTodos[index].status;
-        updateTodoStatus(updatedTodos);
+        const newStatus = !project.todos[index].status; // Toggle the status
+        updateTodoStatus(index, newStatus); // Pass index and new status to the parent function
       };
     return (
         <div className='p-3'>
@@ -27,16 +26,16 @@ function TodoNormal({ project,updateTodoStatus }) {
                         <input type='checkbox' className="checkbox" checked={item.status} onChange={() => handleCheckboxChange(index)}/>
                         </div>
                         <div className='w-full space-y-3'>
-                            <h2 className='font-medium text-xl'>{item.name}</h2>
-                            <h2 className='text-lg font-medium'>{item.description}</h2>
+                            <h2 className={`font-medium text-xl ${item.status ? "line-through" : ""}`}>{item.name}</h2>
+                            <h2 className={`text-lg font-medium ${item.status ? "line-through" : ""}`}>{item.description}</h2>
                             <div className='flex justify-between '>
-                                <h2 className='font-medium'> {new Date(item.createdOn).toLocaleDateString('en-GB', {
+                                <h2 className={`font-medium ${item.status ? "line-through" : ""}`}> {new Date(item.createdOn).toLocaleDateString('en-GB', {
                                     day: 'numeric',
                                     month: 'short',
                                     year: 'numeric',
                                 })}
                                 </h2>
-                                <h2 className='font-medium'>{displayValue}</h2>
+                                <h2 className={`font-medium ${item.status ? "line-through" : ""}`}>{displayValue}</h2>
                             </div>
                         </div>
                     </div>

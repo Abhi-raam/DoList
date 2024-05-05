@@ -43,12 +43,12 @@ function TodoTable({ project,updateTodoStatus }) {
                                         <input type='checkbox' className="checkbox" checked={item.status} 
                                             onChange={() => handleCheckboxChange(index)}/>
                                     </td>
-                                    <td className='border border-slate-600'>{item.name}</td>
-                                    <td className='max-w-[25rem] text-justify border border-slate-600'>{item.description}</td>
-                                    <td className='max-w-[25rem] text-center border border-slate-600'>
+                                    <td className={`border border-slate-600 ${item.status ? "line-through" : ""}`}>{item.name}</td>
+                                    <td className={`border border-slate-600 max-w-[25rem] text-center ${item.status ? "line-through" : ""}`}>{item.description}</td>
+                                    <td className={`border border-slate-600 max-w-[25rem] text-center ${item.status ? "line-through" : ""}`}    >
                                         {item.status ? <p>Completed</p> : <p>Pending</p>}
                                     </td>
-                                    <td className='border border-slate-600'>
+                                    <td className={`border border-slate-600 ${item.status ? "line-through" : ""}`}>
                                         {new Date(item.createdOn).toLocaleDateString('en-GB', {
                                             day: 'numeric',
                                             month: 'short',
@@ -58,7 +58,7 @@ function TodoTable({ project,updateTodoStatus }) {
                                             second: 'numeric',
                                         })}
                                     </td>
-                                    <td className='border border-slate-600'>
+                                    <td className={`border border-slate-600 ${item.status ? "line-through" : ""}`}>
                                         {displayValue}
                                     </td>
                                     <td className='border border-slate-600 '>

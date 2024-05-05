@@ -1,27 +1,30 @@
 import React from 'react'
 
-function TodoNormal({ project }) {
+function TodoNormal({ project,updateTodoStatus }) {
+    const handleCheckboxChange = (index) => {
+        const updatedTodos = [...project.todos];
+        updatedTodos[index].status = !updatedTodos[index].status;
+        updateTodoStatus(updatedTodos);
+      };
     return (
         <div className='p-3'>
             {project?.todos.map((item, index) => {
-                const timeDifferenceInMinutes = Math.floor(
-                    (new Date(item.updatedOn) - new Date(item.createdOn)) / (1000 * 60)
-                  );
-                  let displayValue;
-                  if (timeDifferenceInMinutes < 60) {
-                    displayValue = `${timeDifferenceInMinutes} minute`;
-                  } else if (timeDifferenceInMinutes < 1440) {
-                    const hours = Math.floor(timeDifferenceInMinutes / 60);
-                    displayValue = `${hours} hour`;
-                  } else {
-                    const days = Math.floor(timeDifferenceInMinutes / 1440);
-                    displayValue = `${days} day`;
-                  }
+               const timeDifferenceInMinutes =Math.floor((Date.now() - new Date(item.updatedOn)) / (1000 * 60)) 
+               let displayValue;
+               if (timeDifferenceInMinutes < 60) {
+                   displayValue = `${timeDifferenceInMinutes} minute`;
+               } else if (timeDifferenceInMinutes < 1440) {
+                   const hours = Math.floor(timeDifferenceInMinutes / 60);
+                   displayValue = `${hours} hour`;
+               } else {
+                   const days = Math.floor(timeDifferenceInMinutes / 1440);
+                   displayValue = `${days} day`;
+               }
 
                 return (
                     <div className='flex items-center gap-5 bg-slate-300 rounded-md p-4 mb-2 hover:-translate-y-1 transition'>
                         <div>
-                            <input type="checkbox" className="checkbox" />
+                        <input type='checkbox' className="checkbox" checked={item.status} onChange={() => handleCheckboxChange(index)}/>
                         </div>
                         <div className='w-full space-y-3'>
                             <h2 className='font-medium text-xl'>{item.name}</h2>

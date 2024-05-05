@@ -69,16 +69,20 @@ export const getProjectById = async (projectId) => {
   }
 };
 
-export const updateProjectTodos = async (projectId, updatedTodos) => {
-  try {
-    if (!projectId) {
-      throw new Error("Project ID is required");
+export const updateProjectTodos = async (projectId, updateData) => {
+    // console.log(updateData);
+    try {
+      if (!projectId) {
+        throw new Error("Project ID is required");
+      }
+  
+      const projectRef = doc(db, "projects", projectId); // Reference the project document
+  
+      await updateDoc(projectRef, updateData); // Update the specified fields in Firestore
+  
+      console.log(`Updated project ${projectId} with new data:`, updateData); // Log successful update
+    } catch (error) {
+      console.error("Error updating project:", error); // Handle update error
+      throw error; // Rethrow the error to handle it in the calling function
     }
-    const projectRef = doc(db, "projects", projectId); 
-    await updateDoc(projectRef, { todos: updatedTodos });
-    console.log(`Updated todos for project ID: ${projectId}`);
-  } catch (error) {
-    console.error("Error updating project todos:", error.message);
-    throw error;
-  }
-};
+  };

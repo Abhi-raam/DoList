@@ -29,17 +29,35 @@ function ProjectDetails() {
     fetchProjectDetails()
   }, [location.pathname])
 
-  const updateTodoStatus = async (updatedTodos) => { // Function to update todos
-    const updatedProject = { ...project, todos: updatedTodos }; // Create an updated project object
+  const updateTodoStatus = async (index, newStatus) => { 
+    const currentTimestamp = Date.now(); // Get the current timestamp
+    
+    // Copy the current todos and update the status and 'updatedOn' for the specific todo
+    const updatedTodos = project.todos.map((todo, idx) => 
+      idx === index
+        ? { ...todo, status: newStatus, updatedOn: currentTimestamp } // Only update the specific todo
+        : todo // Keep other todos unchanged
+    );
+  
+    const updatedProject = {
+      ...project,
+      todos: updatedTodos, // Set the updated todos
+      updatedOn: currentTimestamp, // Optionally update project's 'updatedOn'
+    };
+  
     setProject(updatedProject); // Update the project state
-
-    // Optionally persist changes to backend (e.g., Firestore)
+    
     try {
-      await updateProjectTodos(projectId, updatedTodos); // Persist changes
+      await updateProjectTodos(projectId, {
+        todos: updatedTodos, // Persist the updated todos
+        updatedOn: currentTimestamp, // Optionally persist project's 'updatedOn'
+      }); // Persist changes
     } catch (error) {
-      console.error('Error updating project todos:', error); // Handle error if needed
+      console.error("Error updating project todos:", error); // Handle update error
     }
   };
+  
+  
   
   function projectToMarkdown(project) {
     let markdown = `# ${project.projectName}\n\n`; 
@@ -103,7 +121,7 @@ function ProjectDetails() {
         <TodoTable project={project} updateTodoStatus={updateTodoStatus} />
       </div>
       <div className='block md:hidden'>
-        <TodoNormal project = {project}/>
+        <TodoNormal project={project} updateTodoStatus={updateTodoStatus} />
       </div>
     </div>
   )

@@ -5,10 +5,9 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 
 function TodoTable({ project,updateTodoStatus }) {
     const handleCheckboxChange = (index) => {
-        const updatedTodos = [...project.todos]; // Make a copy of todos
-        updatedTodos[index].status = true; // Set the status to true
-        updateTodoStatus(updatedTodos); // Call the parent function to update the state
-    };
+        const newStatus = !project.todos[index].status; // Toggle the status
+        updateTodoStatus(index, newStatus); // Pass index and new status to the parent function
+      };
     return (
         <div>
             <div className='m-5 p-2 rounded-md bg-slate-100 shadow-md'>
@@ -26,9 +25,7 @@ function TodoTable({ project,updateTodoStatus }) {
                     </thead>
                     <tbody className='border border-slate-600'>
                         {project?.todos.map((item, index) => {
-                            const timeDifferenceInMinutes = Math.floor(
-                                (new Date(item.updatedOn) - new Date(item.createdOn)) / (1000 * 60)
-                            );
+                            const timeDifferenceInMinutes =Math.floor((Date.now() - new Date(item.updatedOn)) / (1000 * 60)) 
                             let displayValue;
                             if (timeDifferenceInMinutes < 60) {
                                 displayValue = `${timeDifferenceInMinutes} minute`;
@@ -43,7 +40,7 @@ function TodoTable({ project,updateTodoStatus }) {
                             return (
                                 <tr key={index} className='hover cursor-pointer text-center font-medium'>
                                     <td className='border border-slate-600'>
-                                        <input type='checkbox' checked={item.status} 
+                                        <input type='checkbox' className="checkbox" checked={item.status} 
                                             onChange={() => handleCheckboxChange(index)}/>
                                     </td>
                                     <td className='border border-slate-600'>{item.name}</td>

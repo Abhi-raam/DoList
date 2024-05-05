@@ -19,10 +19,10 @@ function ProjectCard({ project }) {
     console.log(project);
     return (
         <div className='shadow-md bg-slate-200 w-full lg:w-[90%] p-5 hover:-translate-y-1 transition rounded-md cursor-pointer'>
-            <div className='flex items-center justify-between '>
+            <div className='flex items-center justify-between  '>
                 <FaFolderOpen className='text-5xl' />
                 <HiDotsVertical onClick={toggleDlt} />
-            </div>
+            </div>  
             {toggle ?
                 <div className=' relative'>
                     <div className='text-red-600 font-medium  bg-white p-2 rounded-md absolute right-0 -top-2'>

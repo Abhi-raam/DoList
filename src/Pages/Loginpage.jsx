@@ -20,8 +20,6 @@ function Loginpage() {
             await signIn(email, password);
             console.log('Login success');
             navigate('/');
-            // console.log(email);
-            // console.log(password);
         } catch (error) {
             console.log(error);
         }

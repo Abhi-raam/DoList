@@ -1,13 +1,4 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import {addDoc,collection,deleteDoc,doc,getDoc,getDocs, query, updateDoc,where,} from "firebase/firestore";
 import { db } from "../Firebase/config";
 
 export const createUser = async (email, password, username) => {
@@ -24,7 +15,7 @@ export const createProject = async (data) => {
 };
 
 export const editProject = async (id, data) => {
-  console.log(data);
+//   console.log(data);
   try {
     if (!id) {
       console.log("Project id not defined");
@@ -58,7 +49,6 @@ export const getProjectById = async (projectId) => {
 
     if (projectDoc.exists()) {
       const projectData = projectDoc.data();
-      // console.log(projectData);
       return projectData;
     } else {
       throw new Error(`No project found with ID: ${projectId}`);
@@ -70,19 +60,54 @@ export const getProjectById = async (projectId) => {
 };
 
 export const updateProjectTodos = async (projectId, updateData) => {
-    // console.log(updateData);
+  try {
+    if (!projectId) {
+      throw new Error("Project ID is required");
+    }
+
+    const projectRef = doc(db, "projects", projectId);
+
+    await updateDoc(projectRef, updateData);
+
+    console.log(`Updated project ${projectId} with new data:`, updateData);
+  } catch (error) {
+    console.error("Error updating project:", error);
+    throw error;
+  }
+};
+
+export const deleteProject = async (projectId) => {
+    if (!projectId) {
+      throw new Error("Project ID is required");
+    }
+  
+    const projectRef = doc(db, "projects", projectId); // Reference the project document
+  
     try {
-      if (!projectId) {
-        throw new Error("Project ID is required");
-      }
-  
-      const projectRef = doc(db, "projects", projectId); // Reference the project document
-  
-      await updateDoc(projectRef, updateData); // Update the specified fields in Firestore
-  
-      console.log(`Updated project ${projectId} with new data:`, updateData); // Log successful update
+      await deleteDoc(projectRef); // Delete the project from Firestore
+      console.log(`Deleted project with ID: ${projectId}`);
     } catch (error) {
-      console.error("Error updating project:", error); // Handle update error
-      throw error; // Rethrow the error to handle it in the calling function
+      console.error("Error deleting project:", error); // Handle errors
+      throw error; // Rethrow error if needed
     }
   };
+
+
+export const deleteTodo = async (projectId, todoIndex, todos) => {
+  try {
+    const projectRef = doc(db, "projects", projectId); // Reference the project document
+
+    const updatedTodos = [...todos];
+    updatedTodos.splice(todoIndex, 1); // Remove the specified todo from the list
+
+    // Persist the updated todos to Firestore
+    await updateDoc(projectRef, { todos: updatedTodos });
+
+    console.log(
+      `Deleted todo at index ${todoIndex} from project ID: ${projectId}`
+    );
+  } catch (error) {
+    console.error("Error deleting todo:", error.message); // Handle errors
+    throw error; // Rethrow the error to handle it in the calling function
+  }
+};

@@ -1,9 +1,9 @@
 import React from 'react'
 
-function TodoNormal({ project,updateTodoStatus }) {
+function TodoNormal({ project,updateTodoStatus,setProject }) {
     const handleCheckboxChange = (index) => {
-        const newStatus = !project.todos[index].status; // Toggle the status
-        updateTodoStatus(index, newStatus); // Pass index and new status to the parent function
+        const newStatus = !project.todos[index].status; 
+        updateTodoStatus(index, newStatus);
       };
     return (
         <div className='p-3'>

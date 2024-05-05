@@ -6,29 +6,29 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { InfinitySpin } from 'react-loader-spinner';
 
 function EditProject() {
-    const { user } = UserAuth(); // Get user info
+    const { user } = UserAuth(); 
     const navigate = useNavigate();
     const location = useLocation();
-    const [loading, setLoading] = useState(true); // Loading state
+    const [loading, setLoading] = useState(true); 
     const [projectName, setProjectName] = useState('');
-    const [todos, setTodos] = useState([]); // Initial empty array for todos
-    const projectId = location.pathname.split('/').pop(); // Extract project ID from the URL
+    const [todos, setTodos] = useState([]);
+    const projectId = location.pathname.split('/').pop();
 
     useEffect(() => {
         const fetchProjectDetails = async () => {
             try {
-                const projectData = await getProjectById(projectId); // Fetch project details
-                setProjectName(projectData.projectName); // Set project name
-                setTodos(projectData.todos || []); // Set todos
+                const projectData = await getProjectById(projectId);
+                setProjectName(projectData.projectName);
+                setTodos(projectData.todos || []);
             } catch (error) {
-                console.error('Error fetching project details:', error); // Handle error
+                console.error('Error fetching project details:', error);
             } finally {
-                setLoading(false); // End loading
+                setLoading(false);
             }
         };
 
-        fetchProjectDetails(); // Fetch project details when component mounts
-    }, [projectId]); // Dependency array with projectId
+        fetchProjectDetails(); 
+    }, [projectId]);
 
     const addTask = () => {
         setTodos([
@@ -37,7 +37,7 @@ function EditProject() {
                 name: '',
                 description: '',
                 status: false,
-                createdOn: Date.now(), // Initial createdOn for new tasks
+                createdOn: Date.now(),
                 updatedOn: Date.now(),
             },
         ]);
@@ -49,9 +49,9 @@ function EditProject() {
 
     const handleTodoChange = (index, field, value) => {
         const updatedTodos = [...todos];
-        updatedTodos[index][field] = value; // Update the field
-        updatedTodos[index].updatedOn = Date.now(); // Update updatedOn
-        setTodos(updatedTodos); // Set the updated todos state
+        updatedTodos[index][field] = value; 
+        updatedTodos[index].updatedOn = Date.now(); 
+        setTodos(updatedTodos);
     };
 
     const handleEdit = async (e) => {

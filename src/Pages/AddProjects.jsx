@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
 import { createProject } from '../Helpers/UserHelpers';
 import { UserAuth } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -8,11 +7,9 @@ const AddProjects = () => {
     const { user } = UserAuth();
     const navigate = useNavigate()
     const [projectName, setProjectName] = useState('');
-    // const [projectId, setProjectId] = useState(uuidv4());
     const [projectCreatedOn, setProjectCreatedOn] = useState(Date.now());
     const [todos, setTodos] = useState([
         {
-            // id: uuidv4(),
             name: '',
             description: '',
             status: false,
@@ -25,7 +22,7 @@ const AddProjects = () => {
         setTodos([
             ...todos,
             {
-                // id: uuidv4(), // Generate unique ID for the new task
+                
                 name: '',
                 description: '',
                 status: false,
@@ -36,7 +33,7 @@ const AddProjects = () => {
     };
 
     const removeTask = (index) => {
-        setTodos(todos.filter((_, i) => i !== index)); // Correctly remove the specified task
+        setTodos(todos.filter((_, i) => i !== index)); 
     };
 
     const handleTodoChange = (index, field, value) => {
@@ -50,7 +47,6 @@ const AddProjects = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const fullProject = {
-            // projectId,
             projectName,
             projectCreatedOn,
             userId: user.uid,

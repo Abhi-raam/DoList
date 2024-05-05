@@ -2,11 +2,27 @@ import React from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { deleteTodo } from '../Helpers/UserHelpers';
 
-function TodoTable({ project,updateTodoStatus }) {
+function TodoTable({ project,updateTodoStatus,setProject }) {
     const handleCheckboxChange = (index) => {
-        const newStatus = !project.todos[index].status; // Toggle the status
-        updateTodoStatus(index, newStatus); // Pass index and new status to the parent function
+        const newStatus = !project.todos[index].status;
+        updateTodoStatus(index, newStatus); 
+      };
+
+      const handleDeleteTodo = async (index) => { // Function to delete a specific todo
+        try {
+          await deleteTodo(project.id, index, project.todos); // Delete the todo from Firestore
+    
+          // Update the parent project state
+          const updatedProject = {
+            ...project,
+            todos: project.todos.filter((_, idx) => idx !== index), // Remove the deleted todo
+          };
+          setProject(updatedProject); // Update the project state with the new todos
+        } catch (error) {
+          console.error("Error deleting todo:", error.message); // Handle errors
+        }
       };
     return (
         <div>
@@ -62,7 +78,7 @@ function TodoTable({ project,updateTodoStatus }) {
                                         {displayValue}
                                     </td>
                                     <td className='border border-slate-600 '>
-                                        <div className='text-red-600 flex items-center justify-center gap-2'>
+                                        <div onClick={() => handleDeleteTodo(index)} className='text-red-600 flex items-center justify-center gap-2'>
                                             <RiDeleteBin6Line />
                                             <p>Delete</p>
                                         </div>

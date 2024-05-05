@@ -95,8 +95,7 @@ function EditProject() {
                             placeholder="Type here"
                             className="input input-bordered"
                             value={projectName}
-                            onChange={(e) => setProjectName(e.target.value)} // Update project name
-                        />
+                            onChange={(e) => setProjectName(e.target.value)} />
                     </label>
                     {todos.map((todo, index) => (
                         <div key={index} className="pb-3">
@@ -110,8 +109,7 @@ function EditProject() {
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
                                         value={todo.name}
-                                        onChange={(e) => handleTodoChange(index, 'name', e.target.value)}
-                                    />
+                                        onChange={(e) => handleTodoChange(index, 'name', e.target.value)} />
                                 </div>
                             </label>
                             <label className="form-control">
@@ -124,13 +122,11 @@ function EditProject() {
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
                                         value={todo.description}
-                                        onChange={((e) => handleTodoChange(index, 'description', e.target.value))}// Update description without changing createdOn
-                                    />
+                                        onChange={((e) => handleTodoChange(index, 'description', e.target.value))} />
                                     <button
                                         type="button"
                                         className="btn bg-red-500 text-white hover:bg-red-600"
-                                        onClick={() => removeTask(index)}
-                                    >
+                                        onClick={() => removeTask(index)}>
                                         Remove Task
                                     </button>
                                 </div>
@@ -140,8 +136,7 @@ function EditProject() {
                     <button
                         type='button'
                         className='btn bg-green-500 hover:bg-green-600 text-white'
-                        onClick={addTask}
-                    >
+                        onClick={addTask}>
                         Add Task
                     </button>
                     <div className='flex justify-center pt-10'>

@@ -3,7 +3,12 @@ import { FiEdit } from 'react-icons/fi';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
-function TodoTable({ project }) {
+function TodoTable({ project,updateTodoStatus }) {
+    const handleCheckboxChange = (index) => {
+        const updatedTodos = [...project.todos]; // Make a copy of todos
+        updatedTodos[index].status = true; // Set the status to true
+        updateTodoStatus(updatedTodos); // Call the parent function to update the state
+    };
     return (
         <div>
             <div className='m-5 p-2 rounded-md bg-slate-100 shadow-md'>
@@ -23,22 +28,23 @@ function TodoTable({ project }) {
                         {project?.todos.map((item, index) => {
                             const timeDifferenceInMinutes = Math.floor(
                                 (new Date(item.updatedOn) - new Date(item.createdOn)) / (1000 * 60)
-                              );
-                              let displayValue;
-                              if (timeDifferenceInMinutes < 60) {
+                            );
+                            let displayValue;
+                            if (timeDifferenceInMinutes < 60) {
                                 displayValue = `${timeDifferenceInMinutes} minute`;
-                              } else if (timeDifferenceInMinutes < 1440) {
+                            } else if (timeDifferenceInMinutes < 1440) {
                                 const hours = Math.floor(timeDifferenceInMinutes / 60);
                                 displayValue = `${hours} hour`;
-                              } else {
+                            } else {
                                 const days = Math.floor(timeDifferenceInMinutes / 1440);
                                 displayValue = `${days} day`;
-                              }
+                            }
 
                             return (
                                 <tr key={index} className='hover cursor-pointer text-center font-medium'>
                                     <td className='border border-slate-600'>
-                                        <input type='checkbox' name='' id='' />
+                                        <input type='checkbox' checked={item.status} 
+                                            onChange={() => handleCheckboxChange(index)}/>
                                     </td>
                                     <td className='border border-slate-600'>{item.name}</td>
                                     <td className='max-w-[25rem] text-justify border border-slate-600'>{item.description}</td>

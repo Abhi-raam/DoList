@@ -4,6 +4,7 @@ import ProjectCard from '../Components/ProjectCard'
 import { InfinitySpin } from "react-loader-spinner";
 import { UserAuth } from '../Context/AuthContext';
 import { getAllProjectsForUser } from '../Helpers/UserHelpers';
+import { Link } from 'react-router-dom';
 function HomePage() {
     const { user } = UserAuth();
     const [projects, setProjects] = useState([]);
@@ -36,7 +37,11 @@ function HomePage() {
                     <h3 className='font-semibold text-sm text-[#7365b7]'>Overview</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
                         {projects.map((project, index) => (
-                            <ProjectCard project={project} />
+                            <div className='w-full'>
+                                <Link to={`/project-details/${project.id}`}>
+                                    <ProjectCard project={project} />
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 </div>

@@ -80,9 +80,6 @@ function TodoTable({ projectId, project, updateTodoStatus, setProject }) {
                                             day: 'numeric',
                                             month: 'short',
                                             year: 'numeric',
-                                            hour: 'numeric',
-                                            minute: 'numeric',
-                                            second: 'numeric',
                                         })}
                                     </td>
                                     <td className={`border border-slate-600 ${item.status ? "line-through" : ""}`}>

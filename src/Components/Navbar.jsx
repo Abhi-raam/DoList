@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../Context/AuthContext'
+import Avatar from './Avatar';
 
 function Navbar() {
     const navigate = useNavigate();
     const [navbtn, setNavBtn] = useState(false)
     const { user, logout } = UserAuth();
     const toggleNavBtn = () => {
+        console.log(user);
         setNavBtn(!navbtn)
     }
     const handleLogout = async () => {
@@ -69,6 +71,7 @@ function Navbar() {
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
+                                <Avatar name={user.uid}/>
                                 <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                             </div>
                         </div>

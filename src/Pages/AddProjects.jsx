@@ -22,7 +22,7 @@ const AddProjects = () => {
         setTodos([
             ...todos,
             {
-                
+
                 name: '',
                 description: '',
                 status: false,
@@ -33,7 +33,7 @@ const AddProjects = () => {
     };
 
     const removeTask = (index) => {
-        setTodos(todos.filter((_, i) => i !== index)); 
+        setTodos(todos.filter((_, i) => i !== index));
     };
 
     const handleTodoChange = (index, field, value) => {
@@ -69,6 +69,7 @@ const AddProjects = () => {
                             <span className="label-text">Project Name</span>
                         </div>
                         <input
+                            required
                             type="text"
                             placeholder="Type here"
                             className="input input-bordered"
@@ -83,6 +84,7 @@ const AddProjects = () => {
                                 </div>
                                 <div className='flex gap-3'>
                                     <input
+                                        required
                                         type="text"
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
@@ -96,6 +98,7 @@ const AddProjects = () => {
                                 </div>
                                 <div className='flex gap-3'>
                                     <input
+                                        required
                                         type="text"
                                         placeholder="Type here"
                                         className="input input-bordered w-full"

@@ -6,10 +6,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { InfinitySpin } from 'react-loader-spinner';
 
 function EditProject() {
-    const { user } = UserAuth(); 
+    const { user } = UserAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const [loading, setLoading] = useState(true); 
+    const [loading, setLoading] = useState(true);
     const [projectName, setProjectName] = useState('');
     const [todos, setTodos] = useState([]);
     const projectId = location.pathname.split('/').pop();
@@ -27,7 +27,7 @@ function EditProject() {
             }
         };
 
-        fetchProjectDetails(); 
+        fetchProjectDetails();
     }, [projectId]);
 
     const addTask = () => {
@@ -49,8 +49,8 @@ function EditProject() {
 
     const handleTodoChange = (index, field, value) => {
         const updatedTodos = [...todos];
-        updatedTodos[index][field] = value; 
-        updatedTodos[index].updatedOn = Date.now(); 
+        updatedTodos[index][field] = value;
+        updatedTodos[index].updatedOn = Date.now();
         setTodos(updatedTodos);
     };
 
@@ -91,6 +91,7 @@ function EditProject() {
                             <span className="label-text">Project Name</span>
                         </div>
                         <input
+                            required
                             type="text"
                             placeholder="Type here"
                             className="input input-bordered"
@@ -105,6 +106,7 @@ function EditProject() {
                                 </div>
                                 <div className='flex gap-3'>
                                     <input
+                                        required
                                         type="text"
                                         placeholder="Type here"
                                         className="input input-bordered w-full"
@@ -118,6 +120,7 @@ function EditProject() {
                                 </div>
                                 <div className='flex gap-3'>
                                     <input
+                                        required
                                         type="text"
                                         placeholder="Type here"
                                         className="input input-bordered w-full"

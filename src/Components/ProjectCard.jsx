@@ -16,7 +16,6 @@ function ProjectCard({ project }) {
         year: 'numeric',
     });
     const incompleteTodos = project.todos.filter((todo) => todo.status === true);
-    console.log(project);
     return (
         <div className='shadow-md bg-slate-200 w-full lg:w-[90%] p-5 hover:-translate-y-1 transition rounded-md cursor-pointer'>
             <div className='flex items-center justify-between  '>

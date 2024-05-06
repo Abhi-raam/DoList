@@ -119,22 +119,22 @@ function ProjectDetails() {
         <h2 className='text-2xl font-semibold'>Project name : {project.projectName}</h2>
         <div className='flex justify-end gap-2 pt-4'>
           <Link to={`/edit-project/${projectId}`}>
-            <button className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100'>
+            <button className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
               <FaPlus />Edit
             </button>
           </Link>
-          <button onClick={handleDeleteProject}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100'>
+          <button onClick={handleDeleteProject}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
             <RiDeleteBin6Line />
             <p>Delete</p>
           </button>
-          <button onClick={downloadMarkdown} className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100'>
+          <button onClick={downloadMarkdown} className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
             <FaPlus />Export as gist
           </button>
 
         </div>
       </div>
       <div className='hidden md:block'>
-        <TodoTable project={project} updateTodoStatus={updateTodoStatus} setProject={setProject} />
+        <TodoTable projectId={projectId} project={project} updateTodoStatus={updateTodoStatus} setProject={setProject} />
       </div>
       <div className='block md:hidden'>
         <TodoNormal project={project} updateTodoStatus={updateTodoStatus} setProject={setProject} />

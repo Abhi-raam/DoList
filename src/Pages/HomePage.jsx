@@ -37,7 +37,7 @@ function HomePage() {
                     <h3 className='font-semibold text-sm text-[#7365b7]'>Overview</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
                         {projects.map((project, index) => (
-                            <div className='w-full'>
+                            <div key={index} className='w-full'>
                                 <Link to={`/project-details/${project.id}`}>
                                     <ProjectCard project={project} />
                                 </Link>

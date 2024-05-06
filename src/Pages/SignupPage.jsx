@@ -5,17 +5,20 @@ import { createUser } from '../Helpers/UserHelpers'
 import { useState } from 'react'
 import { UserAuth } from '../Context/AuthContext'
 import { PiEye, PiEyeClosed } from "react-icons/pi";
+import { InfinitySpin } from 'react-loader-spinner'
 
 function SignupPage() {
     const navigate = useNavigate()
-    const { register } = UserAuth()
+    const { register,setGotoSignip } = UserAuth()
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [loading, setLoading] = useState(false); 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true)
             await register(email, password);
             await createUser(email, password, username);
             setEmail('');
@@ -24,11 +27,20 @@ function SignupPage() {
             navigate('/login');
         } catch (error) {
             alert('Registration failed: ' + error.message);
+        }finally{
+            setLoading(false)
         }
     };
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+    if (loading) {
+        return (
+            <div className='items-center h-[90vh] justify-center flex'>
+                <InfinitySpin width='200' color='#7365b7' />
+            </div>
+        )
+    }
     return (
         <div className='h-screen flex items-center justify-around'>
             <div className='w-[80%] lg:w-1/3  space-y-5'>
@@ -78,7 +90,7 @@ function SignupPage() {
                 </form>
 
                 <div className='text-center'>
-                    <h3>Already a member ? <Link to='/login' className='text-blue_secondary font-medium underline cursor-pointer'>Login</Link></h3>
+                    <h3>Already a member ? <Link to='/login' className='text-blue_secondary font-medium underline cursor-pointer' onClick={()=>setGotoSignip(false)}>Login</Link></h3>
                 </div>
 
             </div>

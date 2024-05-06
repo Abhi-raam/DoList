@@ -3,12 +3,14 @@ import loginImg from '../assets/login.png'
 import { useState } from 'react'
 import { UserAuth } from '../Context/AuthContext'
 import { PiEye, PiEyeClosed } from "react-icons/pi";
+import { InfinitySpin } from 'react-loader-spinner';
 
 function Loginpage() {
     const navigate = useNavigate()
     const [email, setUserEmail] = useState("")
     const [password, setPassword] = useState("")
-    const { signIn } = UserAuth();
+    const { signIn,setGotoSignip } = UserAuth();
+    const [loading, setLoading] = useState(false); 
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -16,14 +18,24 @@ function Loginpage() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             await signIn(email, password);
             console.log('Login success');
             navigate('/');
         } catch (error) {
-            console.log(error);
+            alert(error);
+        }finally{
+            setLoading(false)
         }
 
+    }
+    if (loading) {
+        return (
+            <div className='items-center h-[90vh] justify-center flex'>
+                <InfinitySpin width='200' color='#7365b7' />
+            </div>
+        )
     }
 
     return (
@@ -61,7 +73,7 @@ function Loginpage() {
                     </button>
                 </form>
                 <div className='text-center'>
-                    <h3>Not a member ? <Link to='/signup' className='text-blue_secondary font-medium underline cursor-pointer'>Register Now</Link></h3>
+                    <h3>Not a member ? <Link to='/signup' className='text-blue_secondary font-medium underline cursor-pointer' onClick={()=>setGotoSignip(true)}>Register Now</Link></h3>
                 </div>
             </div>
             <div className='w-auto hidden lg:block'>

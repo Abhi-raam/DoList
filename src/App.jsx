@@ -9,16 +9,20 @@ import SignupPage from './Pages/SignupPage'
 import { AuthContextProvider } from './Context/AuthContext'
 import ProjectDetails from './Pages/ProjectDetails'
 import EditProject from './Pages/EditProject'
+import ProtectedRoute from './ProtectRoute/ProtectRoute'
 
 function App() {
   return (
     <div>
       <AuthContextProvider>
+        <ProtectedRoute>
         <Navbar />
+        </ProtectedRoute>
+          
         <Routes>
-          <Route path='/' element={<HomePage />} />
           <Route path='/login' element={<Loginpage />} />
           <Route path='/signup' element={<SignupPage />} />
+          <Route path='/' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/projects' element={<ProjectPage />} />
           <Route path='/add-projects' element={<AddProjects />} />
           <Route path='/project-details/:id' element={<ProjectDetails />} />

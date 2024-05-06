@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiEdit } from 'react-icons/fi';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { deleteTodo } from '../Helpers/UserHelpers';
+import { InfinitySpin } from 'react-loader-spinner';
 
-function TodoTable({ project,updateTodoStatus,setProject }) {
+function TodoTable({ projectId, project, updateTodoStatus, setProject }) {
+    const [loading, setLoading] = useState(false);
     const handleCheckboxChange = (index) => {
         const newStatus = !project.todos[index].status;
-        updateTodoStatus(index, newStatus); 
-      };
+        updateTodoStatus(index, newStatus);
+    };
 
-      const handleDeleteTodo = async (index) => { // Function to delete a specific todo
+    const handleDeleteTodo = async (index) => {
         try {
-          await deleteTodo(project.id, index, project.todos); // Delete the todo from Firestore
-    
-          // Update the parent project state
-          const updatedProject = {
-            ...project,
-            todos: project.todos.filter((_, idx) => idx !== index), // Remove the deleted todo
-          };
-          setProject(updatedProject); // Update the project state with the new todos
+            setLoading(true);
+            await deleteTodo(projectId, index, project.todos);
+            const updatedProject = {
+                ...project,
+                todos: project.todos.filter((_, idx) => idx !== index),
+            };
+            setProject(updatedProject);
         } catch (error) {
-          console.error("Error deleting todo:", error.message); // Handle errors
+            alert(error)
         }
-      };
+        finally {
+            setLoading(false);
+        }
+    };
+    if (loading) {
+        return (
+            <div className='items-center h-[90vh] justify-center flex'>
+                <InfinitySpin width='200' color='#7365b7' />
+            </div>
+        );
+    }
     return (
         <div>
             <div className='m-5 p-2 rounded-md bg-slate-100 shadow-md'>
@@ -40,8 +51,8 @@ function TodoTable({ project,updateTodoStatus,setProject }) {
                         </tr>
                     </thead>
                     <tbody className='border border-slate-600'>
-                        {project?.todos.map((item, index) => {
-                            const timeDifferenceInMinutes =Math.floor((Date.now() - new Date(item.updatedOn)) / (1000 * 60)) 
+                        {project?.todos?.map((item, index) => {
+                            const timeDifferenceInMinutes = Math.floor((Date.now() - new Date(item.updatedOn)) / (1000 * 60))
                             let displayValue;
                             if (timeDifferenceInMinutes < 60) {
                                 displayValue = `${timeDifferenceInMinutes} minute`;
@@ -56,8 +67,8 @@ function TodoTable({ project,updateTodoStatus,setProject }) {
                             return (
                                 <tr key={index} className='hover cursor-pointer text-center font-medium'>
                                     <td className='border border-slate-600'>
-                                        <input type='checkbox' className="checkbox" checked={item.status} 
-                                            onChange={() => handleCheckboxChange(index)}/>
+                                        <input type='checkbox' className="checkbox" checked={item.status}
+                                            onChange={() => handleCheckboxChange(index)} />
                                     </td>
                                     <td className={`border border-slate-600 ${item.status ? "line-through" : ""}`}>{item.name}</td>
                                     <td className={`border border-slate-600 max-w-[25rem] text-center ${item.status ? "line-through" : ""}`}>{item.description}</td>
@@ -78,7 +89,7 @@ function TodoTable({ project,updateTodoStatus,setProject }) {
                                         {displayValue}
                                     </td>
                                     <td className='border border-slate-600 '>
-                                        <div onClick={() => handleDeleteTodo(index)} className='text-red-600 flex items-center justify-center gap-2'>
+                                        <div onClick={() => { index >= 0 && index < project.todos.length ? handleDeleteTodo(index) : console.log("index now equal to one"); }} className='text-red-600 flex items-center justify-center gap-2'>
                                             <RiDeleteBin6Line />
                                             <p>Delete</p>
                                         </div>

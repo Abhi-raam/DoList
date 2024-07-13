@@ -1,10 +1,6 @@
 import React from 'react'
 
-function TodoNormal({ project, updateTodoStatus, setProject }) {
-    const handleCheckboxChange = (index) => {
-        const newStatus = !project.todos[index].status;
-        updateTodoStatus(index, newStatus);
-    };
+function BinNormal({ project }) {
     return (
         <div className='p-3'>
             {project?.todos?.map((item, index) => {
@@ -41,10 +37,8 @@ function TodoNormal({ project, updateTodoStatus, setProject }) {
                     </div>
                 )
             })}
-
-
         </div>
     )
 }
 
-export default TodoNormal
+export default BinNormal

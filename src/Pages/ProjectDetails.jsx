@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { deleteProject, getProjectById, updateProjectTodos } from '../Helpers/UserHelpers';
+import { deleteProject, getProjectById, moveToRecyclebin, updateProjectTodos } from '../Helpers/UserHelpers';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FaPlus } from 'react-icons/fa';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
@@ -19,7 +19,6 @@ function ProjectDetails() {
     const fetchProjectDetails = async () => {
       try {
         const projectData = await getProjectById(projectId)
-        console.log(projectData);
         setProject(projectData)
       } catch (error) {
         console.error('Error fetching blog details:', error);
@@ -57,17 +56,26 @@ function ProjectDetails() {
     }
   };
 
-  const handleDeleteProject = async () => {
-    try {
-      setLoading(true);
-      await deleteProject(projectId); 
-      navigate("/projects"); 
-    } catch (error) {
-      console.error("Error deleting project:", error); // Handle errors
+  // const handleDeleteProject = async () => {
+  //   try {
+  //     setLoading(true);
+  //     await deleteProject(projectId); 
+  //     navigate("/projects"); 
+  //   } catch (error) {
+  //     console.error("Error deleting project:", error); // Handle errors
+  //   }finally{
+  //     setLoading(false);
+  //   }
+  // };
+  const moveToRecycle =  ()=>{
+    try{
+      setLoading(true)
+      moveToRecyclebin(project,projectId)
+      navigate("/projects");
     }finally{
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
 
 
@@ -123,9 +131,13 @@ function ProjectDetails() {
               <FaPlus />Edit
             </button>
           </Link>
-          <button onClick={handleDeleteProject}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
+          {/* <button onClick={handleDeleteProject}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
             <RiDeleteBin6Line />
             <p>Delete</p>
+          </button> */}
+          <button onClick={moveToRecycle}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
+            <RiDeleteBin6Line />
+            <p>Move to RecycleBin</p>
           </button>
           <button onClick={downloadMarkdown} className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
             <FaPlus />Export as gist

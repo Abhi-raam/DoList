@@ -41,7 +41,7 @@ function Navbar() {
                                                 <li><Link to='/add-projects'>Add Projects</Link></li>
                                             </ul>
                                         </li>
-                                        <li><a>Item 3</a></li>
+                                        {/* <li><a>Item 3</a></li> */}
                                     </ul>
                                 </div>
                                 : null}
@@ -61,10 +61,11 @@ function Navbar() {
                                 <ul className="w-[10rem]">
                                     <li><Link to='/projects'>All Projects</Link></li>
                                     <li><Link to='/add-projects'>Add Projects</Link></li>
+                                    <li><Link to="/recyclebin">Recycle bin</Link></li>
                                 </ul>
                             </details>
                         </li>
-                        <li><a>Item 3</a></li>
+                        {/* <li><a>Item 3</a></li> */}
                     </ul>
                 </div>
                 <div className="">

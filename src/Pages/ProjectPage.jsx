@@ -11,18 +11,19 @@ function ProjectPage() {
     const { user } = UserAuth();
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
 
-        const fetchProject = async () => {
-            try {
-                setLoading(true)
-                const projectArray = await getAllProjectsForUser(user.uid)
-                setProjects(projectArray)
-            } finally {
-                setLoading(false)
-            }
+    const fetchProject = async () => {
+        try {
+            setLoading(true)
+            const projectArray = await getAllProjectsForUser(user.uid)
+            setProjects(projectArray)
+            console.log(projectArray);
+        } finally {
+            setLoading(false)
         }
-
+    }
+    
+    useEffect(() => {
         fetchProject();
     }, [user])
     return (
@@ -36,15 +37,20 @@ function ProjectPage() {
                     <InfinitySpin width='250' color='#7365b7' />
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
+                projects.length!==0?(
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 justify-items-center pt-5">
                     {projects.map((project, index) => (
-                        <div className='w-full'>
+                        <div key={index} className='w-full'>
                             <Link to={`/project-details/${project.id}`}>
                                 <ProjectCard project={project} />
                             </Link>
                         </div>
                     ))}
                 </div>
+                ):(
+                    <p>No data found</p>
+                )
             )}
         </div>
     )

@@ -10,14 +10,16 @@ import { AuthContextProvider } from './Context/AuthContext'
 import ProjectDetails from './Pages/ProjectDetails'
 import EditProject from './Pages/EditProject'
 import ProtectedRoute from './ProtectRoute/ProtectRoute'
+import Reayclebin from './Pages/Reayclebin'
+import RecycleBinDetails from './Pages/RecycleBinDetails'
 
 function App() {
   return (
     <div>
       <AuthContextProvider>
-        <ProtectedRoute>
+        {/* <ProtectedRoute> */}
         <Navbar />
-        </ProtectedRoute>
+        {/* </ProtectedRoute> */}
           
         <Routes>
           <Route path='/login' element={<Loginpage />} />
@@ -25,6 +27,8 @@ function App() {
           <Route path='/' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path='/projects' element={<ProjectPage />} />
           <Route path='/add-projects' element={<AddProjects />} />
+          <Route path='/recyclebin' element={<Reayclebin/>} />
+          <Route path='/recyclebin-details/:id' element={<RecycleBinDetails/>} />
           <Route path='/project-details/:id' element={<ProjectDetails />} />
           <Route path='/edit-project/:id' element={<EditProject />} />
         </Routes>

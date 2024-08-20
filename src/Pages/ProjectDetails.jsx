@@ -124,11 +124,12 @@ function ProjectDetails() {
   return (
     <div className='pt-20'>
       <div className='px-5'>
-        <h2 className='text-2xl font-semibold'>Project name : {project.projectName}</h2>
+        <h2 className='text-2xl font-semibold'>Project Name : {project.projectName}</h2>
         <div className='flex justify-end gap-2 pt-4'>
           <Link to={`/edit-project/${projectId}`}>
             <button className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
-              <FaPlus />Edit
+              <FaPlus  className='text-xs'/>
+              <p className='max-sm:text-xs'>Edit</p>
             </button>
           </Link>
           {/* <button onClick={handleDeleteProject}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
@@ -137,10 +138,11 @@ function ProjectDetails() {
           </button> */}
           <button onClick={moveToRecycle}  className='text-red-600 flex items-center justify-center gap-2 border border-red-700 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
             <RiDeleteBin6Line />
-            <p>Move to RecycleBin</p>
+            <p className='max-sm:text-xs'>Move to RecycleBin</p>
           </button>
           <button onClick={downloadMarkdown} className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
-            <FaPlus />Export as gist
+            <FaPlus className='text-xs'/>
+            <p className='max-sm:text-xs'>Export as gist</p>
           </button>
 
         </div>

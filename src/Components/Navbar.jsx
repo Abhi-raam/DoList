@@ -41,49 +41,48 @@ function Navbar() {
                                                 <li><Link to='/add-projects'>Add Projects</Link></li>
                                             </ul>
                                         </li>
-                                        {/* <li><a>Item 3</a></li> */}
+                                        <li><Link to="/recyclebin">Recycle bin</Link></li>
                                     </ul>
                                 </div>
                                 : null}
                         </div>
                         : null}
-                    <a className="btn btn-ghost text-xl text-[#7365b7]">DoList</a>
+                    <Link to="/" className="btn btn-ghost text-xl text-[#7365b7]">DoList</Link>
                 </div>
                 {/* lg screen */}
-                {user?
-                <div className='navbar-end'>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal px-1">
-                        <li><Link to='/'>Home</Link></li>
-                        <li className='z-30'>
-                            <details>
-                                <summary>Project</summary>
-                                <ul className="w-[10rem]">
-                                    <li><Link to='/projects'>All Projects</Link></li>
-                                    <li><Link to='/add-projects'>Add Projects</Link></li>
-                                    <li><Link to="/recyclebin">Recycle bin</Link></li>
+                {user ?
+                    <div className='navbar-end'>
+                        <div className="navbar-center hidden lg:flex">
+                            <ul className="menu menu-horizontal px-1">
+                                <li><Link to='/'>Home</Link></li>
+                                <li className='z-30'>
+                                    <details>
+                                        <summary>Project</summary>
+                                        <ul className="w-[10rem]">
+                                            <li><Link to='/projects'>All Projects</Link></li>
+                                            <li><Link to='/add-projects'>Add Projects</Link></li>
+                                        </ul>
+                                    </details>
+                                </li>
+                                <li><Link to="/recyclebin">Recycle bin</Link></li>
+                            </ul>
+                        </div>
+                        <div className="">
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <Avatar name={user.uid} />
+                                        <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    </div>
+                                </div>
+                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                                    <li><a>Profile</a></li>
+                                    <li><button onClick={handleLogout}>Logout</button></li>
                                 </ul>
-                            </details>
-                        </li>
-                        {/* <li><a>Item 3</a></li> */}
-                    </ul>
-                </div>
-                <div className="">
-                    <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <Avatar name={user.uid}/>
-                                <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                             </div>
                         </div>
-                        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                            <li><a>Profile</a></li>
-                            <li><button onClick={handleLogout}>Logout</button></li>
-                        </ul>
                     </div>
-                </div>
-                </div>
-                :null}
+                    : null}
             </div>
         </div>
     )

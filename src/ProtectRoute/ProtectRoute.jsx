@@ -5,7 +5,6 @@ import { UserAuth } from '../Context/AuthContext';
 const ProtectedRoute = ({ children }) => {
     const { user,gotoSignin } = UserAuth();
 
-    // Custom condition to decide where to redirect
     const shouldGoToSignup = gotoSignin;
 
     if (!user) {

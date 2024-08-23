@@ -24,6 +24,8 @@ function Loginpage() {
             await signIn(email, password);
             navigate('/');
         } catch (error) {
+            console.log(error);
+            
             toast.error("Invalid credentials please try again");
         } finally {
             setLoading(false)

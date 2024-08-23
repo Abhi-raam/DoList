@@ -17,27 +17,30 @@ import { Toaster } from 'react-hot-toast'
 
 function App() {
   const location = useLocation();
+  const hideNavbarRoutes = ['/login', '/signup'];
 
   return (
     <div>
       <AuthContextProvider>
         {/* <ProtectedRoute> */}
-        <Navbar />
+        {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
+        
         <Toaster position="top-center" reverseOrder={false} />
         {/* </ProtectedRoute> */}
           
         <Routes>
           <Route path='/login' element={<Loginpage />} />
           <Route path='/signup' element={<SignupPage />} />
+
           <Route path='/' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
-          <Route path='/projects' element={<ProjectPage />} />
-          <Route path='/add-projects' element={<AddProjects />} />
-          <Route path='/recyclebin' element={<Reayclebin/>} />
-          <Route path='/recyclebin-details/:id' element={<RecycleBinDetails/>} />
-          <Route path='/project-details/:id' element={<ProjectDetails />} />
-          <Route path='/edit-project/:id' element={<EditProject />} />
+          <Route path='/projects' element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+          <Route path='/add-projects' element={<ProtectedRoute><AddProjects /></ProtectedRoute>} />
+          <Route path='/recyclebin' element={<ProtectedRoute><Reayclebin/></ProtectedRoute>} />
+          <Route path='/recyclebin-details/:id' element={<ProtectedRoute><RecycleBinDetails/></ProtectedRoute>} />
+          <Route path='/project-details/:id' element={<ProtectedRoute><ProjectDetails /></ProtectedRoute>} />
+          <Route path='/edit-project/:id' element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
         </Routes>
-        {location.pathname !== "/login" && <Footer/>}
+        {!hideNavbarRoutes.includes(location.pathname) && <Footer />}
       </AuthContextProvider>
     </div>
   )

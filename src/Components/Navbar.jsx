@@ -8,14 +8,12 @@ function Navbar() {
     const [navbtn, setNavBtn] = useState(false)
     const { user, logout } = UserAuth();
     const toggleNavBtn = () => {
-        console.log(user);
         setNavBtn(!navbtn)
     }
     const handleLogout = async () => {
         try {
             await logout();
             navigate('/login');
-            console.log('You are logged out')
         } catch (e) {
             console.log(e.message);
         }

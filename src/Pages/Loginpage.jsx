@@ -4,13 +4,14 @@ import { useState } from 'react'
 import { UserAuth } from '../Context/AuthContext'
 import { PiEye, PiEyeClosed } from "react-icons/pi";
 import { InfinitySpin } from 'react-loader-spinner';
+import toast from 'react-hot-toast';
 
 function Loginpage() {
     const navigate = useNavigate()
     const [email, setUserEmail] = useState("")
     const [password, setPassword] = useState("")
-    const { signIn,setGotoSignip } = UserAuth();
-    const [loading, setLoading] = useState(false); 
+    const { signIn, setGotoSignip } = UserAuth();
+    const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -21,11 +22,10 @@ function Loginpage() {
         setLoading(true)
         try {
             await signIn(email, password);
-            console.log('Login success');
             navigate('/');
         } catch (error) {
-            alert(error);
-        }finally{
+            toast.error("Invalid credentials please try again");
+        } finally {
             setLoading(false)
         }
 
@@ -73,7 +73,7 @@ function Loginpage() {
                     </button>
                 </form>
                 <div className='text-center'>
-                    <h3>Not a member ? <Link to='/signup' className='text-blue_secondary font-medium underline cursor-pointer' onClick={()=>setGotoSignip(true)}>Register Now</Link></h3>
+                    <h3>Not a member ? <Link to='/signup' className='text-blue_secondary font-medium underline cursor-pointer' onClick={() => setGotoSignip(true)}>Register Now</Link></h3>
                 </div>
             </div>
             <div className='w-auto hidden lg:block'>

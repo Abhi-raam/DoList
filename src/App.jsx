@@ -1,6 +1,6 @@
 import React from 'react'
 import HomePage from './Pages/HomePage'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import ProjectPage from './Pages/ProjectPage'
 import AddProjects from './Pages/AddProjects'
@@ -12,13 +12,18 @@ import EditProject from './Pages/EditProject'
 import ProtectedRoute from './ProtectRoute/ProtectRoute'
 import Reayclebin from './Pages/Reayclebin'
 import RecycleBinDetails from './Pages/RecycleBinDetails'
+import Footer from './Components/Footer'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
+  const location = useLocation();
+
   return (
     <div>
       <AuthContextProvider>
         {/* <ProtectedRoute> */}
         <Navbar />
+        <Toaster position="top-center" reverseOrder={false} />
         {/* </ProtectedRoute> */}
           
         <Routes>
@@ -32,6 +37,7 @@ function App() {
           <Route path='/project-details/:id' element={<ProjectDetails />} />
           <Route path='/edit-project/:id' element={<EditProject />} />
         </Routes>
+        {location.pathname !== "/login" && <Footer/>}
       </AuthContextProvider>
     </div>
   )

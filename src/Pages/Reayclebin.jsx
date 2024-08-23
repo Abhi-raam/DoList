@@ -14,7 +14,6 @@ function Reayclebin() {
         try {
             setLoading(true);
             const binArray = await recyclebinItems(user.uid);
-            console.log(binArray);
             setBinData(binArray);
         } catch (error) {
             console.error("Error fetching recycle bin items:", error);
@@ -27,7 +26,7 @@ function Reayclebin() {
     }, [user]);
 
     return (
-        <div className="p-4">
+        <div className="p-4 min-h-screen">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-semibold text-[#7365b7]">Recycle Bin</h2>
             </div>

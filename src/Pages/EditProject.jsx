@@ -4,7 +4,8 @@ import { editProject, getProjectById } from '../Helpers/UserHelpers';
 import { UserAuth } from '../Context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import { IoAddCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline } from "react-icons/io5";
 function EditProject() {
     const { user } = UserAuth();
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ function EditProject() {
     }
 
     return (
-        <div className='p-6 lg:h-screen'>
+        <div className='p-6 min-h-screen'>
             <div>
                 <h2 className='text-2xl lg:text-3xl font-semibold'>Edit Project</h2>
             </div>
@@ -128,9 +129,9 @@ function EditProject() {
                                         onChange={((e) => handleTodoChange(index, 'description', e.target.value))} />
                                     <button
                                         type="button"
-                                        className="btn bg-red-500 text-white hover:bg-red-600"
+                                        className="btn btn-circle bg-red-500 text-white hover:bg-red-600"
                                         onClick={() => removeTask(index)}>
-                                        Remove Task
+                                       <IoCloseCircleOutline size={25}/>
                                     </button>
                                 </div>
                             </label>
@@ -138,12 +139,12 @@ function EditProject() {
                     ))}
                     <button
                         type='button'
-                        className='btn bg-green-500 hover:bg-green-600 text-white'
+                        className='btn btn-circle bg-green-500 hover:bg-green-600 text-white'
                         onClick={addTask}>
-                        Add Task
+                         <IoAddCircleOutline size={25}/>
                     </button>
                     <div className='flex justify-center pt-10'>
-                        <button type='submit' className='btn btn-sm px-6 btn-primary'>
+                        <button type='submit' className='btn btn-sm px-6 text-white bg-violet-500 hover:bg-violet-600'>
                             Save Changes
                         </button>
                     </div>

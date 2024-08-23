@@ -3,10 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { deleteProject, getProjectById, moveToRecyclebin, updateProjectTodos } from '../Helpers/UserHelpers';
 import { InfinitySpin } from 'react-loader-spinner';
 import { FaPlus } from 'react-icons/fa';
-import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { CiEdit,CiExport } from "react-icons/ci";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import TodoTable from '../Components/TodoTable';
 import TodoNormal from '../Components/TodoNormal';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 
 function ProjectDetails() {
   const location = useLocation();
@@ -122,13 +122,13 @@ function ProjectDetails() {
     );
   }
   return (
-    <div className='pt-20'>
+    <div className='pt-20 min-h-screen'>
       <div className='px-5'>
         <h2 className='text-2xl font-semibold'>Project Name : {project.projectName}</h2>
         <div className='flex justify-end gap-2 pt-4'>
           <Link to={`/edit-project/${projectId}`}>
             <button className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
-              <FaPlus  className='text-xs'/>
+              <CiEdit size={20}  className='text-xs'/>
               <p className='max-sm:text-xs'>Edit</p>
             </button>
           </Link>
@@ -141,7 +141,7 @@ function ProjectDetails() {
             <p className='max-sm:text-xs'>Move to RecycleBin</p>
           </button>
           <button onClick={downloadMarkdown} className='text-violet-600 flex items-center gap-3 border border-violet-700 p-1 rounded-md px-3 hover:bg-slate-100 btn-sm md:btn-md'>
-            <FaPlus className='text-xs'/>
+            <CiExport size={20} className='text-xs'/>
             <p className='max-sm:text-xs'>Export as gist</p>
           </button>
 

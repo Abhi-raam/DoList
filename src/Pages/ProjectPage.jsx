@@ -17,7 +17,6 @@ function ProjectPage() {
             setLoading(true)
             const projectArray = await getAllProjectsForUser(user.uid)
             setProjects(projectArray)
-            console.log(projectArray);
         } finally {
             setLoading(false)
         }
@@ -27,7 +26,7 @@ function ProjectPage() {
         fetchProject();
     }, [user])
     return (
-        <div className='p-4'>
+        <div className='p-4 min-h-screen'>
             <div className='flex justify-between items-center'>
                 <h2 className='text-2xl font-semibold text-[#7365b7] '>My Projects</h2>
                 <Link to="/add-projects" className='border p-1 px-4 rounded-md border-[#7365b7] flex items-center gap-3 text-[#7365b7]'><FaPlus />Create New</Link>

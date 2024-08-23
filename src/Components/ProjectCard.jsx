@@ -17,25 +17,10 @@ function ProjectCard({ project }) {
     });
     const incompleteTodos = project.todos.filter((todo) => todo.status === true);
     return (
-        <div className='shadow-md bg-slate-200 w-full lg:w-[90%] p-5 hover:-translate-y-1 transition rounded-md cursor-pointer'>
-            <div className='flex items-center justify-start  '>
+        <div className='shadow-md bg-slate-200 w-[20rem] p-5 hover:-translate-y-1 transition rounded-md cursor-pointer'>
+            <div className='flex items-center justify-start '>
                 <FaFolderOpen className='text-5xl' />
-                {/* <div className='bg-slate-100 rounded-md  p-2'>
-                    <HiDotsVertical onClick={toggleDlt} />
-                </div> */}
             </div>
-            {/* {toggle ?
-                <div className=' relative'>
-                    <div className='text-red-600 font-medium  bg-white p-2 rounded-md absolute right-0 -top-2'>
-                        <div className='hover:bg-slate-300 flex items-center gap-3 p-1 rounded-sm'>
-                            <RiDeleteBin6Line />Delete Permanently
-                        </div>
-                        <div className='hover:bg-slate-300 flex items-center gap-3 p-1 rounded-sm'>
-                            <RiDeleteBin6Line />Delete
-                        </div>
-                    </div>
-                </div>
-                : null} */}
             <div className='flex justify-between items-center pt-5'>
                 <h2 className='text-lg font-semibold'>{project.projectName}</h2>
                 <div className='flex flex-col items-center'>
